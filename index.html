@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP Khan ESP Panel</title>
+    <!-- Socket.io CDN joda gaya hai -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -145,34 +147,37 @@
             <div class="section-title">Visuals (ESP)</div>
             <div class="toggle-item">
                 <span>ESP Line</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                <label class="switch"><input type="checkbox" id="espLine" onchange="sendToggle('espLine')"><span class="slider"></span></label>
             </div>
             <div class="toggle-item">
                 <span>ESP Box</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                <label class="switch"><input type="checkbox" id="espBox" onchange="sendToggle('espBox')"><span class="slider"></span></label>
             </div>
             <div class="toggle-item">
                 <span>Health Bar</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                <label class="switch"><input type="checkbox" id="healthBar" onchange="sendToggle('healthBar')"><span class="slider"></span></label>
             </div>
             <div class="toggle-item">
                 <span>Distance</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                <label class="switch"><input type="checkbox" id="distance" onchange="sendToggle('distance')"><span class="slider"></span></label>
             </div>
 
             <div class="section-title">Advanced Hacks</div>
             <div class="toggle-item special-hack">
                 <span>🎯 Bullet Tracking</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                <label class="switch"><input type="checkbox" id="bulletTracking" onchange="sendToggle('bulletTracking')"><span class="slider"></span></label>
             </div>
             <div class="toggle-item special-hack">
                 <span>✨ Magic Bullet</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                <label class="switch"><input type="checkbox" id="magicBullet" onchange="sendToggle('magicBullet')"><span class="slider"></span></label>
             </div>
         </div>
     </div>
 
     <script>
+        // Apne WebSocket server ka URL yahan daal dena (abhi localhost par set hai)
+        const socket = io("http://localhost:3000");
+
         function verifyKey() {
             var val = document.getElementById("keyInput").value;
             var msgBox = document.getElementById("msg");
@@ -180,11 +185,32 @@
             if (val === "789685") {
                 document.getElementById("loginView").style.display = "none";
                 document.getElementById("dashView").style.display = "block";
+                
+                // Server ko bata sakte hain ki user login ho gaya hai
+                socket.emit("user_login", { status: "success" });
             } else {
                 msgBox.style.color = "#ff4d4d";
                 msgBox.innerText = "गलत की है! (सही की: 789685)";
             }
         }
+
+        // Jab bhi koi toggle change hoga, yeh function server ko data bhejega
+        function sendToggle(featureName) {
+            const isChecked = document.getElementById(featureName).checked;
+            
+            // Server par 'toggle_update' event bhej rahe hain
+            socket.emit("toggle_update", {
+                feature: featureName,
+                enabled: isChecked
+            });
+            
+            console.log(featureName + " set to: " + isChecked);
+        }
+
+        // Server se agar koi response ya update aaye toh yahan handle hoga
+        socket.on("server_response", (data) => {
+            console.log("Server message:", data);
+        });
     </script>
 
 </body>
