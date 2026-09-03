@@ -3,132 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Khan ESP - Login</title>
+    <title>VIP Khan Loader</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
-            background: linear-gradient(135deg, #0a0f1d, #1a1f3c);
+            background-color: #0d1117;
             color: #ffffff;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
+            margin: 0;
         }
-        .login-container {
-            background: rgba(22, 27, 34, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
-            width: 340px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
+        .box {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            width: 320px;
             text-align: center;
         }
-        .login-container h2 {
-            color: #00ffcc;
-            margin-bottom: 10px;
-            font-size: 26px;
-            letter-spacing: 1.5px;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        }
-        .subtitle {
-            font-size: 13px;
-            color: #8b949e;
-            margin-bottom: 25px;
-        }
-        .input-box {
-            position: relative;
+        h2 {
+            color: #58a6ff;
             margin-bottom: 20px;
         }
-        .input-box input {
+        input {
             width: 100%;
-            padding: 14px;
-            background: rgba(13, 17, 23, 0.8);
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: #0d1117;
             border: 1px solid #30363d;
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
             text-align: center;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
         }
-        .input-box input:focus {
-            border-color: #00ffcc;
-            box-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
-        }
-        .login-btn {
+        button {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #00b09b, #96c93d);
+            padding: 12px;
+            background-color: #238636;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, opacity 0.3s;
         }
-        .login-btn:active {
-            transform: scale(0.98);
+        button:hover {
+            background-color: #2ea043;
         }
-        .login-btn:hover {
-            opacity: 0.9;
-        }
-        #error-msg {
+        #msg {
             margin-top: 15px;
-            font-size: 13px;
-            color: #ff4d4d;
-            display: none;
-        }
-        .success-screen {
-            display: none;
-            text-align: center;
-        }
-        .success-screen h1 {
-            color: #00ffcc;
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Login Box -->
-    <div class="login-container" id="loginBox">
-        <h2>VIP KHAN ESP</h2>
-        <div class="subtitle">Secure Loader Gateway</div>
-        <div class="input-box">
-            <input type="password" id="loginKey" placeholder="Enter Login Key">
-        </div>
-        <button class="login-btn" onclick="checkKey()">LOGIN</button>
-        <div id="error-msg">गलत की है भाई! (सही की: 789685 डालें)</div>
-    </div>
-
-    <!-- Success Panel (Key डालने के बाद दिखने वाला पेज) -->
-    <div class="login-container success-screen" id="successBox">
-        <h1>Welcome, VIP Khan! 🔥</h1>
-        <p style="color: #8b949e; font-size: 14px;">Loader Successfully Connected & Verified.</p>
+    <div class="box" id="mainBox">
+        <h2>VIP KHAN LOADER</h2>
+        <input type="text" id="keyInput" placeholder="Enter Key (789685)">
+        <button onclick="verifyKey()">LOGIN</button>
+        <div id="msg"></div>
     </div>
 
     <script>
-        function checkKey() {
-            var inputVal = document.getElementById("loginKey").value;
-            var errorMsg = document.getElementById("error-msg");
-            
-            // यहाँ पासवर्ड चेक हो रहा है
-            if (inputVal === "789685") {
-                document.getElementById("loginBox").style.display = "none";
-                document.getElementById("successBox").style.display = "block";
+        function verifyKey() {
+            var val = document.getElementById("keyInput").value;
+            var msgBox = document.getElementById("msg");
+
+            if (val === "789685") {
+                msgBox.style.color = "#2ea043";
+                msgBox.innerHTML = "<b>Success! Loader Connected. 🔥</b>";
+                setTimeout(function() {
+                    document.getElementById("mainBox").innerHTML = "<h1 style='color: #2ea043;'>Welcome VIP Khan!</h1><p>Panel Active Successfully.</p>";
+                }, 1000);
             } else {
-                errorMsg.style.display = "block";
-                document.getElementById("loginKey").style.borderColor = "#ff4d4d";
+                msgBox.style.color = "#ff4d4d";
+                msgBox.innerText = "गलत की है! सही की (789685) डालें।";
             }
         }
     </script>
