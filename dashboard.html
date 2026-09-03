@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Khan ESP Panel</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        .panel {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+        }
+        h2 {
+            color: #58a6ff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        .section-title {
+            font-size: 13px;
+            color: #8b949e;
+            margin: 15px 0 8px 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 4px;
+        }
+        .toggle-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0d1117;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #21262d;
+        }
+        .toggle-item span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        /* Special styling for Bullet tracking and Magic bullet */
+        .special-hack {
+            border: 1px solid #ff7b72;
+            background: rgba(255, 123, 114, 0.05);
+        }
+        .special-hack span {
+            color: #ff7b72;
+            font-weight: bold;
+        }
+        /* Custom Switch CSS */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #30363d;
+            transition: .3s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #238636;
+        }
+        .special-hack input:checked + .slider {
+            background-color: #ff7b72;
+        }
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+    </style>
+</head>
+<body>
 
+    <div class="panel">
+        <h2>VIP KHAN - ESP MENU</h2>
+
+        <div class="section-title">Visuals (ESP)</div>
+        
+        <div class="toggle-item">
+            <span>ESP Line</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-item">
+            <span>ESP Box</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-item">
+            <span>Health Bar</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-item">
+            <span>Distance</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="section-title">Advanced Memory Hacks</div>
+
+        <div class="toggle-item special-hack">
+            <span>🎯 Bullet Tracking</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-item special-hack">
+            <span>✨ Magic Bullet</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+</body>
+</html>
