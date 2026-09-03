@@ -3,26 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Khan ESP</title>
+    <title>VIP Khan Loader - Login</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         body {
-            background: linear-gradient(135deg, #1f4068, #162447);
+            background-color: #0d1117;
             color: #ffffff;
-            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-card {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            border: 1px solid #30363d;
             text-align: center;
-            padding-top: 100px;
         }
-        h1 {
-            color: #e43f5a;
-            font-size: 2.5rem;
+        .login-card h2 {
+            color: #58a6ff;
+            margin-bottom: 25px;
+            font-size: 24px;
+            letter-spacing: 1px;
         }
-        p {
-            font-size: 1.2rem;
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #8b949e;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #58a6ff;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #238636;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .login-btn:hover {
+            background-color: #2ea043;
+        }
+        .footer-text {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #8b949e;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to VIP Khan ESP!</h1>
-    <p>भाई, वेबसाइट एकदम सक्सेसफुली लाइव हो चुकी है। 🔥</p>
+
+    <div class="login-card">
+        <h2>VIP KHAN LOADER</h2>
+        <div class="input-group">
+            <label for="login-key">Enter Login Key</label>
+            <input type="text" id="login-key" placeholder="Key yahan daalein...">
+        </div>
+        <button class="login-btn">LOGIN</button>
+        <div class="footer-text">Demo UI Panel v1.0</div>
+    </div>
+
 </body>
 </html>
