@@ -2,53 +2,77 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Zoom rokne ke liye user-scalable=no add kiya hai -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VIP Khan ESP Panel</title>
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Mobile touch par accidental zoom/selection rokne ke liye */
+            touch-action: manipulation;
+        }
         body {
             background-color: #0d1117;
             color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
+            padding: 15px;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         .panel {
             background-color: #161b22;
             border: 1px solid #30363d;
             border-radius: 12px;
-            max-width: 400px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 380px;
             padding: 20px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.6);
         }
         h2 {
             color: #58a6ff;
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
             letter-spacing: 1px;
         }
         .section-title {
-            font-size: 13px;
+            font-size: 12px;
             color: #8b949e;
-            margin: 15px 0 8px 0;
+            margin: 15px 0 6px 0;
             text-transform: uppercase;
             border-bottom: 1px solid #30363d;
             padding-bottom: 4px;
         }
         .toggle-item {
             display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #21262d;
+        }
+        .toggle-row {
+            display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #0d1117;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #21262d;
+            width: 100%;
         }
         .toggle-item span {
             font-size: 14px;
             font-weight: 500;
+        }
+        /* Memory rating aur status text ke liye */
+        .memory-status {
+            font-size: 11px;
+            color: #8b949e;
+            margin-top: 5px;
         }
         /* Special styling for Bullet tracking and Magic bullet */
         .special-hack {
@@ -58,6 +82,9 @@
         .special-hack span {
             color: #ff7b72;
             font-weight: bold;
+        }
+        .special-hack .memory-status {
+            color: #ffa198;
         }
         /* Custom Switch CSS */
         .switch {
@@ -109,55 +136,115 @@
         <div class="section-title">Visuals (ESP)</div>
         
         <div class="toggle-item">
-            <span>ESP Line</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+            <div class="toggle-row">
+                <span>ESP Line</span>
+                <label class="switch">
+                    <input type="checkbox" id="espLine" onchange="toggleMemory('espLine', 'ESP Line')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="status_espLine" class="memory-status">Memory: OFF</div>
         </div>
 
         <div class="toggle-item">
-            <span>ESP Box</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+            <div class="toggle-row">
+                <span>ESP Box</span>
+                <label class="switch">
+                    <input type="checkbox" id="espBox" onchange="toggleMemory('espBox', 'ESP Box')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="status_espBox" class="memory-status">Memory: OFF</div>
         </div>
 
         <div class="toggle-item">
-            <span>Health Bar</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+            <div class="toggle-row">
+                <span>Health Bar</span>
+                <label class="switch">
+                    <input type="checkbox" id="healthBar" onchange="toggleMemory('healthBar', 'Health Bar')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="status_healthBar" class="memory-status">Memory: OFF</div>
         </div>
 
         <div class="toggle-item">
-            <span>Distance</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+            <div class="toggle-row">
+                <span>Distance</span>
+                <label class="switch">
+                    <input type="checkbox" id="distance" onchange="toggleMemory('distance', 'Distance')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="status_distance" class="memory-status">Memory: OFF</div>
         </div>
 
         <div class="section-title">Advanced Memory Hacks</div>
 
         <div class="toggle-item special-hack">
-            <span>🎯 Bullet Tracking</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+            <div class="toggle-row">
+                <span>🎯 Bullet Tracking</span>
+                <label class="switch">
+                    <input type="checkbox" id="bulletTracking" onchange="toggleMemory('bulletTracking', 'Bullet Tracking')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="status_bulletTracking" class="memory-status">Memory: OFF</div>
         </div>
 
         <div class="toggle-item special-hack">
-            <span>✨ Magic Bullet</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+            <div class="toggle-row">
+                <span>✨ Magic Bullet</span>
+                <label class="switch">
+                    <input type="checkbox" id="magicBullet" onchange="toggleMemory('magicBullet', 'Magic Bullet')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="status_magicBullet" class="memory-status">Memory: OFF</div>
         </div>
     </div>
+
+    <script>
+        // Socket connection (apne backend/local server ka URL yahan lagana)
+        const socket = io("http://localhost:3000");
+
+        socket.on("connect", () => {
+            console.log("Connected to socket server!");
+        });
+
+        function toggleMemory(elementId, featureName) {
+            const checkbox = document.getElementById(elementId);
+            const statusText = document.getElementById("status_" + elementId);
+            const isEnabled = checkbox.checked;
+
+            if (isEnabled) {
+                statusText.innerText = "Memory: Writing [OK]";
+                statusText.style.color = "#3fb950";
+            } else {
+                statusText.innerText = "Memory: OFF";
+                statusText.style.color = "#8b949e";
+            }
+
+            // Socket ke through C++ / Python backend ya server ko data bhejna
+            socket.emit("memory_toggle", {
+                feature: featureName,
+                id: elementId,
+                state: isEnabled
+            });
+            
+            console.log(featureName + " memory state: " + isEnabled);
+        }
+
+        // Server se agar memory patch confirmation aaye
+        socket.on("memory_response", (data) => {
+            if(data && data.id) {
+                const statusText = document.getElementById("status_" + data.id);
+                if(statusText) {
+                    statusText.innerText = "Memory Rating: " + (data.rating || "Active");
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
