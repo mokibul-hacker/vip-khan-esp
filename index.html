@@ -1,1 +1,140 @@
-,518813964
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cream Catcher Mini Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 600px;
+            background: linear-gradient(to bottom, #ff9a9e, #fecfef);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .scoreboard {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        #basket {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 40px;
+            background: #8B4513;
+            border-radius: 0 0 25px 25px;
+            box-shadow: inset 0 -5px 0 rgba(0,0,0,0.2);
+            touch-action: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        #basket::before {
+            content: "🧺";
+            position: absolute;
+            top: -15px;
+        }
+
+        .item {
+            position: absolute;
+            font-size: 32px;
+            top: -50px;
+        }
+
+        .game-over-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .game-over-screen h1 {
+            color: #ff4757;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .game-over-screen p {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .btn-restart {
+            padding: 12px 28px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background: #2ed573;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
+        }
+
+        .btn-restart:active {
+            transform: scale(0.95);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container" id="gameArea">
+        <div class="scoreboard">
+            <div>Score: <span id="score">0</span></div>
+            <div>Lives: <span id="lives">❤️❤️❤️</span></div>
+        </div>
+
+        <div id="basket">
+          
